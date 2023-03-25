@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search</title>
+
+  <!-- You MUST include jQuery 3+ before Fomantic -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.2/dist/semantic.min.js"></script>
+
+</head>
+<body>
+
+<div class="ui segment container">
+
+  <div class="ui padded inverted green segment">
+    <h1 class="ui dividing header">Search</h1>
+
+    <form class="ui segment fluid form"
+          method="post"
+          data-th-action="@{/}"
+          autofocus="true" autocomplete="off">
+      <div class="ui massive icon fluid input">
+        <input type="text" placeholder="Search..." id="q" name="q" data-th-attr="onkeyup=|replaceResults();|">
+        <i class="search icon"></i>
+      </div>
+    </form>
+
+    <div class="ui padded segment">
+      <h3 class="ui dividing subheader">search results</h3>
+      <div class="ui inverted cards" id="search_result_cards">
+        <div class="card" data-th-each="r : ${results}">
+          <div class="content">
+            <div class="header" data-th-text="${r.result}"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let lastSearch = '';
+
+    function replaceResults() {
+      let query = $('#q').val();
+      lastSearch = query;
+
+      $.post("search", {q: query}, function(data) {
+         if (lastSearch === query) {
+           $('#search_result_cards').html(data);
+         }
+
+      });
+
+    }
+
+  </script>
+
+</div>
+
+</body>
+</html>
