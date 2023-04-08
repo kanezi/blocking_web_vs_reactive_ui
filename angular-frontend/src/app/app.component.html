@@ -1,0 +1,37 @@
+<nz-layout>
+  <nz-content>
+    <div class="inner-content">
+      <div nz-row>
+        <div nz-col nzSpan="12" nzOffset="6">
+          <form nz-form [formGroup]="searchForm">
+            <nz-input-group nzSearch nzPrefixIcon="search" nzSize="large">
+              <input type="text" nz-input placeholder="search..." formControlName="q"/>
+            </nz-input-group>
+          </form>
+        </div>
+      </div>
+
+      <div nz-row>
+        <div nz-col nzSpan="10" nzOffset="1" id="blocking_results">
+          <nz-page-header class="site-page-header" nzTitle="Blocking search results"></nz-page-header>
+          <div nz-row *ngIf="true">
+            <nz-card *ngFor="let r of result$ | async">
+              <p>{{r.result}}</p>
+            </nz-card>
+          </div>
+        </div>
+
+        <div nz-col nzSpan="10" nzOffset="2" id="sse_results">
+          <nz-page-header class="site-page-header" nzTitle="SSE search results"></nz-page-header>
+          <div nz-row *ngIf="true">
+            <nz-card *ngFor="let r of sseResult$ | async">
+              <p>{{r.result}}</p>
+            </nz-card>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </nz-content>
+</nz-layout>
